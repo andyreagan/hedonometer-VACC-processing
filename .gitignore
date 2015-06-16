@@ -1,0 +1,5 @@
+*~
+*.pyc
+*.o*
+word-dicts
+word-vectors
