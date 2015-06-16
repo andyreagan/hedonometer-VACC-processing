@@ -41,7 +41,7 @@ def gzipper():
         except:
             print "failed to load a tweet"
         try:
-            if tweet['text']:
+            if tweet['text'] and tweet['lang'] == 'en':
                 tweetreader(tweet['text'],all_words)
         except:
             # print "no text"
