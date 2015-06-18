@@ -30,7 +30,7 @@ if jobs < max_jobs:
                               seconds=now.second,
                               microseconds=now.microsecond)
     # get yesterday
-    yesterday = datetime.datetime.now()-datetime.timedelta(days=100)
+    yesterday = datetime.datetime.now()-datetime.timedelta(days=10)
     fifteen_minutes = datetime.timedelta(minutes=15)
     
     # loop through the 15 minutes until yesterday
@@ -40,7 +40,7 @@ if jobs < max_jobs:
         if not isdir(date.strftime('word-vectors/%Y-%m-%d')):
             mkdir(date.strftime('word-vectors/%Y-%m-%d'))
             mkdir(date.strftime('word-dicts/%Y-%m-%d'))
-        if isfile(date.strftime('/users/c/d/cdanfort/scratch/twitter/tweet-troll/zipped-raw/%Y-%m-%d/%Y-%m-%d-%H-%M.gz')) and not isfile(date.strftime('/users/a/r/areagan/fun/twitter/realtime-parsing/word-vectors/%Y-%m-%d/%Y-%m-%d-%H-%M.csv')):
+        if isfile(date.strftime('/users/c/d/cdanfort/scratch/twitter/tweet-troll/zipped-raw/%Y-%m-%d/%Y-%m-%d-%H-%M.gz')) and not isfile(date.strftime('/users/a/r/areagan/scratch/realtime-parsing/word-vectors/%Y-%m-%d/%Y-%m-%d-%H-%M.csv')):
             jobs_remaining -= 1
 
             script = '''export DATE={0}

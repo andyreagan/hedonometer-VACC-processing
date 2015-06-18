@@ -6,7 +6,7 @@
 cd /users/a/r/areagan/scratch/realtime-parsing
 
 echo "processing ${DATE}-${HOUR}-${MINUTE}"
-gzip -cd /users/c/d/cdanfort/scratch/twitter/tweet-troll/zipped-raw/${DATE}/${DATE}-${HOUR}-${MINUTE}.gz | python realtime.py "${DATE}" "${DATE}-${HOUR}-${MINUTE}"
+gzip -cd /users/c/d/cdanfort/scratch/twitter/tweet-troll/zipped-raw/${DATE}/${DATE}-${HOUR}-${MINUTE}.gz | python realtime-nofilter.py "${DATE}-nofilter" "${DATE}-${HOUR}-${MINUTE}"
 
 echo "delete me"
 
