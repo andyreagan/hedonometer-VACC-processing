@@ -28,9 +28,9 @@ if True:
     date = now
     while date > yesterday:
         print(date)
-        if not isdir(date.strftime('word-vectors/%Y-%m-%d-nofilter')):
-            mkdir(date.strftime('word-vectors/%Y-%m-%d-nofilter'))
-            mkdir(date.strftime('word-dicts/%Y-%m-%d-nofilter'))
+        if not isdir(date.strftime('word-vectors/%Y-%m-%d-spanish')):
+            mkdir(date.strftime('word-vectors/%Y-%m-%d-spanish'))
+            mkdir(date.strftime('word-dicts/%Y-%m-%d-spanish'))
         script = '''export DATE={0}
 export HOUR={1}
 export MINUTE={2}

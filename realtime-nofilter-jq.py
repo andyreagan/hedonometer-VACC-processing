@@ -48,35 +48,9 @@ def gzipper():
     failedparse = 0
     for line in f:
         numtweets+=1
-        try:
-            tweet = loads(line)
-        except:
-            print "failed to load a tweet"
-            failedloads+=1
-        containsText = False
-        try:
-            if 'text' in tweet:
-                containsText = True
-            else:
-                notext += 1
-        except:
-            failedchecktext += 1
-        english = False
-        if containsText:
-            try:
-                if 'lang' in tweet:
-                    if tweet['lang'] == 'en' or tweet['lang'] == 'es':
-                        english = True
-                    else:
-                        notenglish += 1
-                else:
-                    nolang += 1
-            except:
-                failedlangcheck += 1
-            try:
-                tweetreader(tweet['text'],all_words)
-            except:
-                failedparse += 1
+        tweet = loads(line)
+        tweetreader(tweet['text'],all_words)
+
     print('read {0} tweets, failed loading {1} of them'.format(numtweets,failedloads))
     print('{0} had no text, {1} failed checking the text field'.format(notext,failedchecktext))
     print('{0} were not english, {1} had no lang field, and {2} failed to check lang at all'.format(notenglish,nolang,failedlangcheck))

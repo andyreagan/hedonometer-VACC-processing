@@ -25,7 +25,10 @@ from labMTsimple.speedy import *
 labMT = sentiDict('LabMT',stopVal=0.0)
 
 def tweetreader(tweettext,wordDict):
-    words = [x.lower() for x in re.findall(r"[\w\@\#\'\&\]\*\-\/\[\=\;]+",tweettext,flags=re.UNICODE)]
+    replaceStrings = ['---','--','\'\'']
+    for replaceString in replaceStrings:
+        tweettext = tweettext.replace(replaceString,' ')
+    words = [x.lower() for x in re.findall(r"[\w\@\#\'\&\]\*\-\/\[\=]+",tweettext,flags=re.UNICODE)]
     for word in words:
         if word in wordDict:
             wordDict[word] += 1
@@ -35,17 +38,48 @@ def tweetreader(tweettext,wordDict):
 def gzipper():
     all_words = dict()
     f = sys.stdin
+    num_tweets = 0
+    failed_loads = 0
+    no_text = 0
+    no_twitter_lang = 0
+    no_user_lang = 0
+    failed_parse = 0
+    not_english_twitter = 0
+    not_english_user = 0
     for line in f:
+        num_tweets += 1
         try:
             tweet = loads(line)
         except:
+            failed_loads += 1
             print "failed to load a tweet"
         try:
-            if tweet['text'] and tweet['lang'] == 'en':
-                tweetreader(tweet['text'],all_words)
+            if 'text' in tweet:
+                if 'lang' in tweet:
+                    if tweet['lang'] == 'en':
+                        tweetreader(tweet['text'],all_words)
+                    else:
+                        not_english_twitter += 1
+                else:
+                    notwitterlang += 1
+                    if 'lang' in tweet['user']:
+                        if tweet['user']['lang'] == 'en':
+                            tweetreader(tweet['text'],all_words)
+                        else:
+                            not_english_user += 1
+                    else:
+                        no_user_lang += 1
+                        # assume that it is english then....
+                        tweetreader(tweet['text'],all_words)
+            else:
+                no_text += 1
         except:
-            # print "no text"
-            pass
+            failedparse += 1
+    print('read {0} tweets, failed loading {1} of them'.format(num_tweets,failed_loads))
+    print('{0} had no text field (deletes most likely, but dont care to check that)'.format(no_text))
+    print('{0} had no twitter lang, of those {1} had no user lang'.format(no_twitter_lang,no_user_lang))
+    print('failed to parse {0}'.format(failed_parse))
+    print('{0} werent english by twitter, {1} without twitter lang werent english users'.format(not_english_twitter,not_english_user))
     return all_words
 
 if __name__ == '__main__':

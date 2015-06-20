@@ -9,7 +9,7 @@ import time
 from os.path import isdir,isfile
 from os import mkdir
 
-max_jobs = 100
+max_jobs = 200
 
 jobs = int(subprocess.check_output("showq | grep areagan | wc -l",shell=True))
 print("there are {0} jobs via showq".format(jobs))
@@ -30,8 +30,10 @@ if jobs < max_jobs:
                               seconds=now.second,
                               microseconds=now.microsecond)
     # get yesterday
-    yesterday = datetime.datetime.now()-datetime.timedelta(days=10)
-    fifteen_minutes = datetime.timedelta(minutes=15)
+    # yesterday = now-datetime.timedelta(days=10000)
+    yesterday = datetime.datetime(2008,9,11)
+    # delta = datetime.timedelta(minutes=15)
+    delta = datetime.timedelta(hours=1)
     
     # loop through the 15 minutes until yesterday
     # and make all of the files that are missing
@@ -45,8 +47,8 @@ if jobs < max_jobs:
 
             script = '''export DATE={0}
 export HOUR={1}
-export MINUTE={2}
-qsub -qshortq -V run.qsub
+# export MINUTE={2}
+qsub -qshortq -V run-hour.qsub
 \\rm {3}.sh
 
 '''.format(date.strftime('%Y-%m-%d'),date.strftime('%H'),date.strftime('%M'),ctime)
@@ -55,11 +57,11 @@ qsub -qshortq -V run.qsub
             f = open('{}.sh'.format(ctime),'w')
             f.write(script)
             f.close()
-    
+            a = subprocess.check_output("touch {0}".format(date.strftime('/users/a/r/areagan/scratch/realtime-parsing/word-vectors/%Y-%m-%d/%Y-%m-%d-%H-%M.csv')),shell=True)
             qstatus = subprocess.check_output(". {}.sh".format(ctime),shell=True)
             print(qstatus)
             time.sleep(.25)
-        date -= fifteen_minutes
+        date -= delta
 
 
 
