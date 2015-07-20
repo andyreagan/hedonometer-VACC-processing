@@ -5,7 +5,7 @@
 
 cd /users/a/r/areagan/scratch/realtime-parsing
 
-for HOUR in 0{0..9} 10..23
+for HOUR in 0{0..9} {10..23}
 do
   export HOUR
   for MINUTE in 00 15 30 45

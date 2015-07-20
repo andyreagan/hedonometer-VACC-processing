@@ -30,10 +30,10 @@ if jobs < max_jobs:
                               seconds=now.second,
                               microseconds=now.microsecond)
     # get yesterday
-    # yesterday = now-datetime.timedelta(days=10000)
-    yesterday = datetime.datetime(2008,9,11)
-    # delta = datetime.timedelta(minutes=15)
-    delta = datetime.timedelta(hours=1)
+    yesterday = now-datetime.timedelta(days=20)
+    # yesterday = datetime.datetime(2008,9,9)
+    delta = datetime.timedelta(minutes=15)
+    # delta = datetime.timedelta(hours=1)
     
     # loop through the 15 minutes until yesterday
     # and make all of the files that are missing
@@ -43,23 +43,28 @@ if jobs < max_jobs:
             mkdir(date.strftime('word-vectors/%Y-%m-%d'))
             mkdir(date.strftime('word-dicts/%Y-%m-%d'))
         if isfile(date.strftime('/users/c/d/cdanfort/scratch/twitter/tweet-troll/zipped-raw/%Y-%m-%d/%Y-%m-%d-%H-%M.gz')) and not isfile(date.strftime('/users/a/r/areagan/scratch/realtime-parsing/word-vectors/%Y-%m-%d/%Y-%m-%d-%H-%M.csv')):
+        # if not isfile(date.strftime('/users/a/r/areagan/scratch/realtime-parsing/word-vectors/%Y-%m-%d/%Y-%m-%d-%H-%M.csv')):
             jobs_remaining -= 1
 
             script = '''export DATE={0}
 export HOUR={1}
-# export MINUTE={2}
+export MINUTE={2}
 qsub -qshortq -V run-hour.qsub
 \\rm {3}.sh
 
 '''.format(date.strftime('%Y-%m-%d'),date.strftime('%H'),date.strftime('%M'),ctime)
 
-            print('writing {}.sh'.format(ctime))
+            print(date.strftime('word-vectors/%Y-%m-%d/%Y-%m-%d-%H-%M.csv'))
+            
+            # print('writing {}.sh'.format(ctime))
             f = open('{}.sh'.format(ctime),'w')
             f.write(script)
             f.close()
-            a = subprocess.check_output("touch {0}".format(date.strftime('/users/a/r/areagan/scratch/realtime-parsing/word-vectors/%Y-%m-%d/%Y-%m-%d-%H-%M.csv')),shell=True)
+            # no need to touch when running every hour (jobs are much faster)
+            # but this is needed when running retroactively so no overlap
+            # a = subprocess.check_output("touch {0}".format(date.strftime('/users/a/r/areagan/scratch/realtime-parsing/word-vectors/%Y-%m-%d/%Y-%m-%d-%H-%M.csv')),shell=True)
             qstatus = subprocess.check_output(". {}.sh".format(ctime),shell=True)
-            print(qstatus)
+            # print(qstatus)
             time.sleep(.25)
         date -= delta
 

@@ -9,3 +9,5 @@ echo "processing ${DATE}-${HOUR}-${MINUTE}"
 gzip -cd /users/c/d/cdanfort/scratch/twitter/tweet-troll/zipped-raw/${DATE}/${DATE}-${HOUR}-${MINUTE}.gz | python realtime-nofilter.py "${DATE}-spanish" "${DATE}-${HOUR}-${MINUTE}"
 
 echo "delete me"
+
+

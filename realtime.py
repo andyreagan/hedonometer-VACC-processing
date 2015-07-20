@@ -61,7 +61,7 @@ def gzipper():
                     else:
                         not_english_twitter += 1
                 else:
-                    notwitterlang += 1
+                    no_twitter_lang += 1
                     if 'lang' in tweet['user']:
                         if tweet['user']['lang'] == 'en':
                             tweetreader(tweet['text'],all_words)
@@ -74,7 +74,7 @@ def gzipper():
             else:
                 no_text += 1
         except:
-            failedparse += 1
+            failed_parse += 1
     print('read {0} tweets, failed loading {1} of them'.format(num_tweets,failed_loads))
     print('{0} had no text field (deletes most likely, but dont care to check that)'.format(no_text))
     print('{0} had no twitter lang, of those {1} had no user lang'.format(no_twitter_lang,no_user_lang))
@@ -95,7 +95,7 @@ if __name__ == '__main__':
     f = open("word-vectors/{0}/{1}.csv".format(outfolder,outfile),"w")
     f.write('{0:.0f}'.format(textFvec[0]))
     for k in xrange(1,len(textFvec)):
-      f.write(',{0:.0f}'.format(textFvec[k]))
+      f.write('\n{0:.0f}'.format(textFvec[k]))
     f.close()
 
 
