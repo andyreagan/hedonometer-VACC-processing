@@ -21,8 +21,10 @@ import numpy
 import sys
 import pickle
 
-from labMTsimple.speedy import *
-labMT = sentiDict('LabMT',stopVal=0.0)
+sys.path.append("/users/a/r/areagan/work/2014/03-labMTsimple/")
+
+from labMTsimple.speedy import LabMT
+my_LabMT = LabMT(stopVal=0.0)
 
 def tweetreader(tweettext,wordDict):
     replaceStrings = ['---','--','\'\'']
@@ -90,7 +92,7 @@ if __name__ == '__main__':
     
     all_word_dict = gzipper()
     pickle.dump(all_word_dict,open('word-dicts/{0}/{1}.dict'.format(outfolder,outfile),'w'))
-    textFvec = labMT.wordVecifyTrieDict(all_word_dict)
+    textFvec = my_LabMT.wordVecify(all_word_dict)
 
     f = open("word-vectors/{0}/{1}.csv".format(outfolder,outfile),"w")
     f.write('{0:.0f}'.format(textFvec[0]))
