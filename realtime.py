@@ -22,7 +22,6 @@ import sys
 import pickle
 
 sys.path.append("/users/a/r/areagan/work/2014/03-labMTsimple/")
-
 from labMTsimple.speedy import LabMT
 my_LabMT = LabMT(stopVal=0.0)
 
@@ -54,7 +53,7 @@ def gzipper():
             tweet = loads(line)
         except:
             failed_loads += 1
-            print "failed to load a tweet"
+            print("failed to load a tweet")
         try:
             if 'text' in tweet:
                 if 'lang' in tweet:
@@ -95,9 +94,7 @@ if __name__ == '__main__':
     textFvec = my_LabMT.wordVecify(all_word_dict)
 
     f = open("word-vectors/{0}/{1}.csv".format(outfolder,outfile),"w")
-    f.write('{0:.0f}'.format(textFvec[0]))
-    for k in xrange(1,len(textFvec)):
-      f.write('\n{0:.0f}'.format(textFvec[k]))
+    f.write("\n".join(list(map(lambda x: "{0:.7f}".format(x),textFvec))))
     f.close()
 
 
