@@ -3,3 +3,5 @@
 *.o*
 word-dicts
 word-vectors
+RHEL7-python-3.5.1/
+*.zip
