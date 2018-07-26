@@ -1,5 +1,5 @@
-export DATE=2017-04-07
-export HOUR=14
+export DATE=2018-07-25
+export HOUR=20
 # export MINUTE=00
 # qsub -qshortq -V run-hour.qsub
 # qsub -V run-hour.qsub

@@ -11,7 +11,8 @@ from os import mkdir,chmod
 
 max_jobs = 200
 
-jobs = int(subprocess.check_output("showq | grep areagan | wc -l",shell=True))
+# jobs = int(subprocess.check_output("showq | grep areagan | wc -l",shell=True))
+jobs = 0
 print("there are {0} jobs via showq".format(jobs))
 
 print(subprocess.check_output("pwd",shell=True))
